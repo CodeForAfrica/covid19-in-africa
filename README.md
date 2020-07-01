@@ -1,6 +1,6 @@
 # covid19-in-africa
 
-`covid19-in-africa` is a dataset repository for COVID-19 cases in Africa. We Load data from Johns Hopkins University Center for Systems Science and Engineering (JHU CSSE) GitHub.
+`covid19-in-africa` is a dataset repository for COVID-19 cases in Africa. We Load data from Johns Hopkins University Center for Systems Science and Engineering [(JHU CSSE) GitHub](https://github.com/CSSEGISandData/COVID-19/tree/master/csse_covid_19_data).
 
 
 
@@ -9,14 +9,16 @@
 ## Changelog
 
 **Changes**:
-TODO
+> TODO
 
 Full changelog: [`CHANGELOG.md`](CHANGELOG.md) - TODO
 
 ## Update Status
 
 **Commit Status**:
-TODO
+
+> TODO
+
 <Add status bar >
 
 **Workflow status by countries**:
@@ -24,16 +26,18 @@ TODO
 | Country | Status | Data Source |
 | ------------- | ------------- | --- |
 
-TODO
+> TODO
 
 
 ## Dataset
+> TODO 
 
 ### Tabular Data
 
 The **tabular data** files are located in `dataset` folder. The folder `dataset/daily` holds the daily updates in each country.
 
-> The metadata for the tabular data is found in `.dataherb/metadata.yml`.
+<!-- > The metadata for the tabular data is found in `.dataherb/metadata.yml`. -->
+> TODO 
 
 <!-- ### Other Data
 
@@ -45,12 +49,15 @@ The scripts that are being used to update the data are located in `scripts` fold
 
 ### Workflows
 
-TODO
+>TODO
 <!-- The workflows that update the dataset are defined in `.github/workflows`. The python scripts are scheduled to run on GitHub Actions. -->
 
 ## Notes
-TODO
+
+>TODO
 
 ## Community
-TODO
+
+>TODO
+
 **Bugs and requests**: PRs are welcome.
