@@ -31,7 +31,7 @@ def collect_case(url):
 
   return global_cases
 
-def transform(global_cases):
+def transform():
   """Reshape and sort with most recent first.
   Arg:
   global_cases : Dataframe with all global / international cases
@@ -40,6 +40,7 @@ def transform(global_cases):
   africa_cases : tranformed Dataframe with most recent case on first row
   """
   select_columns = ['Province/State','Lat','Long']
+  global_cases = collect_case(url)
   df = global_cases.copy()
   df.drop(select_columns,axis=1, inplace=True)
   df = df[df['Country/Region'].apply(lambda x: x in Africa)].T.reset_index()
@@ -57,6 +58,7 @@ def daily(african_cases):
   Returns:
   daily_case : Dataframe with country / <date>-case columns
   """
+  african_cases = transform()
   df = african_cases.copy()
   df_latest = df.iloc[0].reset_index()
   df_latest.columns = df_latest.iloc[0]
@@ -64,7 +66,30 @@ def daily(african_cases):
   df_latest.rename(columns={'Date':'Country',df_latest.columns[1] : str(df_latest.columns[1])+'Recovered'},inplace=True)
   # daily csv
   filename = df_latest.columns[1] + '-recovered.csv'
+  
+  df_latest.to_csv('./datasets/'+filename)
+  
+  
+def download_daily_case():
+  """Collect, tranfrom and download to datasets folder
+  """
+  global_cases = collect_case(url)
+  african_cases = transform()
+  day_report = daily(african_cases)
+  
+  return day_report
 
+
+  
+
+  
+  
+if __name__ == "__main__":
+  
+  url = "https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_recovered_global.csv"
+  download_daily_case()
+  
+    
   
 
 
