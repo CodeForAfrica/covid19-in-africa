@@ -79,7 +79,13 @@ def download_daily_case():
   
   return day_report
 
-
+# TODO
+# def method_concat_for all():
+#   """Run download_daily_case() for each url
+  
+#   Return:
+#   df_daily : Dataframe with the updated / latest vesion of all cases
+#   """
   
 
   
