@@ -9,6 +9,8 @@ from lxml import etree, html
 from utils import Africa
 
 
+
+
 class Case:
     
     def __init__(self,url):
@@ -26,13 +28,45 @@ class Case:
 
         return global_cases
     
+    def transform(self):
+        """Reshape and sort with most recent first.
+        Arg:
+        global_cases : Dataframe with all global / international cases
+
+        Return:
+        africa_cases : tranformed Dataframe with most recent case on first row
+        """
+        select_columns = ['Province/State','Lat','Long']
+        # df = global_cases.copy()
+        global_cases = self.collect_case()
+        df = global_cases.copy()
+        df.drop(select_columns,axis=1, inplace=True)
+        df = df[df['Country/Region'].apply(lambda x: x in Africa)].T.reset_index()
+        df.columns = df.iloc[0]
+        df.rename(columns={'Country/Region':'Date'},inplace=True)
+        df.drop([0],axis=0,inplace=True)
+        
+        df['Date'] = pd.to_datetime(df['Date']).dt.strftime('%m-%d-%Y')
+        # sort to have the latest update on top row
+        df.sort_values('Date',ascending=False, inplace=True)
+        african_cases = df.copy()
+
+        return african_cases
+    
 confirmed = Case("https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_confirmed_global.csv"
 )
 deaths = Case("https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_deaths_global.csv"
 )
 recovered = Case("https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_recovered_global.csv"
 )
+    
+    
+    
+
 
 # print(deaths.collect_case())
 # print(Case.collect_case(deaths))
+
+print(confirmed.transform())
+
 
