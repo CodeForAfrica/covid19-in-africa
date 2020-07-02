@@ -32,7 +32,7 @@ def collect_case(links):
     return list_cases
 
 #Function to return Africa's most recent cases
-def africa_today():
+def africa_cases():
     """Return the most recent cases for African countries
     Arg:
     global_cases : Dataframe with all global / international cases
@@ -43,22 +43,30 @@ def africa_today():
     global_cases = collect_case(url_dict)
     df = global_cases.copy()
     df.drop(select_columns,axis=1, inplace=True)
+   
+    #transpose dataframe
     df_wide = df[df['Country/Region'].apply(lambda x: x in Africa)].melt(id_vars = ['Country/Region', 'source']).rename(columns = {"variable":"Date"})
     df_wide['Date'] = pd.to_datetime(df_wide['Date']).dt.strftime('%m-%d-%Y')
-    df_max = df_wide[df_wide['Date'] == df_wide.Date.max()]
-    african_cases = df_max.pivot_table(index = ['Country/Region', 'Date'], columns = 'source', values = 'value').reset_index()
+    africa_historic = df_wide.pivot_table(index = ['Country/Region', 'Date'], columns = 'source', values = 'value').reset_index().sort_values(['Date', 'Country/Region'], ascending = [False, True])
+    
+    #extract most recent
+    africa_today = africa_historic[africa_historic['Date'] == africa_historic.Date.max()].sort_values('Confirmed', ascending = False)
 
-    return african_cases
+    return africa_today, africa_historic
 
-#TODO add storage path
+#export
 def download_daily_case():
-    """Collect, tranfrom and download to datasets folder
-      """
-    global_cases = collect_case(url_dict)
-    african_daily = africa_today()
-    return african_daily
+    """Exports files to the datasets folder
+    Returns:
+      csv files in the datasets folder
+    """
+#     today's cases
+    africa_cases()[0].to_csv('./datasets/africa_today.csv', index = False)
+#     historic cases
+    africa_cases()[1].to_csv('./datasets/africa_historic.csv', index = False)
 
-  
+
 if __name__ == "__main__":
     url_dict = {"Confirmed":confirmed_url, "Deaths": deaths_url, "Recovered":recovered_url}
     download_daily_case()
+
