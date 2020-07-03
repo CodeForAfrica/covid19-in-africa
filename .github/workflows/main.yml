@@ -53,7 +53,7 @@ jobs:
       - name: Push changes
         uses: ad-m/github-push-action@master
         with:
-          repository: 4bic/covid19-in-africa
+          repository: CodeForAfrica/covid19-in-africa
           github_token: ${{ secrets.GITHUB_TOKEN }}
           
           
