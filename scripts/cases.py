@@ -11,8 +11,10 @@ from utils import Africa
 
 class Case:
     
-    def __init__(self,url):
+    def __init__(self,url,status):
         self.url = url
+        self.status = status
+        
         
     def collect_case(self):
         """Load csv
@@ -65,26 +67,3 @@ class Case:
         daily_case = df_latest.copy()
         return daily_case
         
-        
-        
-
-    
-    
-    
-confirmed = Case("https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_confirmed_global.csv"
-)
-deaths = Case("https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_deaths_global.csv"
-)
-recovered = Case("https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_recovered_global.csv"
-)
-    
-    
-    
-
-
-# print(deaths.collect_case())
-# print(Case.collect_case(deaths))
-
-print(recovered.daily())
-
-
