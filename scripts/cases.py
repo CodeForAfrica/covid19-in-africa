@@ -53,6 +53,25 @@ class Case:
 
         return african_cases
     
+    def daily(self):
+        """Extract most recent case and transform
+        Returns:
+        daily_case : Dataframe with country / <date>-case columns
+        """
+        african_cases = self.transform()
+        df = african_cases.copy()
+        df_latest = df.iloc[0].reset_index()
+        df_latest.columns = df_latest.iloc[0]
+        df_latest.drop([0],axis=0,inplace=True)
+        daily_case = df_latest.copy()
+        return daily_case
+        
+        
+        
+
+    
+    
+    
 confirmed = Case("https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_confirmed_global.csv"
 )
 deaths = Case("https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_deaths_global.csv"
@@ -67,6 +86,6 @@ recovered = Case("https://raw.githubusercontent.com/CSSEGISandData/COVID-19/mast
 # print(deaths.collect_case())
 # print(Case.collect_case(deaths))
 
-print(confirmed.transform())
+print(recovered.daily())
 
 
