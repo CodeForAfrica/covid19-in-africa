@@ -29,7 +29,9 @@ def collective(all_cases):
         frames.append(frame)
         
     df_final = reduce(lambda left,right: pd.merge(left,right,on='Country'), frames)
-    df_final
+    filename = df_final.columns[1].split('_')[0] + "_all_cases.csv"
+    # archive daily cases
+    df_final.to_csv('./datasets/'+filename)
     
     return df_final
 
