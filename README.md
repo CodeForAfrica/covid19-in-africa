@@ -27,15 +27,23 @@ Full changelog: [`CHANGELOG.md`](CHANGELOG.md) - TODO
 > TODO
 
 
-## Dataset
-> TODO 
+## [Dataset](https://github.com/4bic/covid19-in-africa/tree/master/datasets)
 
 ### Tabular Data
 
-The **tabular data** files are located in `dataset` folder. The folder `dataset/daily` holds the daily updates in each country.
+The **tabular data** files are located in `dataset` folder (_sample head as of Jul-03_). The folder `dataset/daily` holds the daily updates in each country.
 
 <!-- > The metadata for the tabular data is found in `.dataherb/metadata.yml`. -->
-> TODO 
+| Country | 07-02-2020_confirmed | 07-02-2020_deaths | 07-02-2020_recovered
+| ------------- | ------------- | --- | ------------- | ------------- |
+| Algeria | 14657 | 928 | 10342
+| Angola | 315 | 17 | 97
+| Benin	| 1199 | 21 | 333
+| Burkina Faso | 967 | 53 | 846
+| Cameroon | 12592 | 313 | 10100
+| Central African Republic | 3788 | 47 | 810
+| Chad | 868 | 74 | 785
+| Djibouti | 4715 | 55 | 4564
 
 <!-- ### Other Data
 
@@ -59,3 +67,8 @@ The scripts that are being used to update the data are located in `scripts` fold
 >TODO
 
 **Bugs and requests**: PRs are welcome.
+
+
+
+
+
