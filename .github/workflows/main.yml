@@ -42,7 +42,7 @@ jobs:
       - name: Download Daily Cases
         run: |
           python scripts/african_cases.py
-          ls dataset/
+          ls datasets/
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
           git pull
