@@ -34,11 +34,11 @@ jobs:
 
       # Runs a set of commands using the runners shell
 
-      # - name: Install Python Requirements
-      #   run: |
-      #     python --version
-      #     pip install -r scripts/requirements.txt
-      
+      - name: Install Python Requirements
+        run: |
+          python --version
+          pip install -r scripts/requirements.txt
+
       - name: Download Daily Cases
         run: |
           python scripts/african_cases.py
