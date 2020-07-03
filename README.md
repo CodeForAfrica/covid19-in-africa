@@ -35,7 +35,7 @@ The **tabular data** files are located in `dataset` folder (_sample head as of J
 
 <!-- > The metadata for the tabular data is found in `.dataherb/metadata.yml`. -->
 | Country | 07-02-2020_confirmed | 07-02-2020_deaths | 07-02-2020_recovered
-| ------------- | ------------- | --- | ------------- | ------------- |
+| ------------- | ------------- | --- | ------------- |
 | Algeria | 14657 | 928 | 10342
 | Angola | 315 | 17 | 97
 | Benin	| 1199 | 21 | 333
