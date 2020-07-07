@@ -68,6 +68,10 @@ The scripts that are being used to update the data are located in `scripts` fold
 
 **Bugs and requests**: PRs are welcome.
 
+## License
+
+The source code is licensed under MIT license
+
 
 
 
