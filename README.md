@@ -56,7 +56,7 @@ The workflows that update the dataset are defined in `.github/workflows`. The py
 
 ## Community
 
-[![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/dwyl/esta/issues)
+[![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/CodeForAfrica/covid19-in-africa/issues)
 
 **Bugs and requests**: PRs are welcome.
 
