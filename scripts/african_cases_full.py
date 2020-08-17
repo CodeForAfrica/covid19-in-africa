@@ -4,15 +4,12 @@ import os
 import re
 from lxml import etree, html
 
+from utils import Africa
+
+
 confirmed_url = "https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_confirmed_global.csv"
 deaths_url = "https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_deaths_global.csv"
 recovered_url = "https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_recovered_global.csv"
-
-Africa = ["Algeria", "Angola", "Benin", "Botswana", "Burkina Faso", "Burundi", "Cameroon", "Cape Verde", "Central African Republic", "Chad",
-"Comoros", "Democratic Republic of the Congo", "Republic of the Congo", "Djibouti", "Egypt", "Equatorial Guinea", "Eritrea", "Ethiopia", "Gabon",
-"Gambia", "Ghana", "Guinea", "Guinea-Bissau", "Ivory Coast", "Kenya", "Lesotho", "Liberia", "Libya", "Madagascar", "Malawi", "Mali", "Mauritania",
-"Mauritius", "Morocco", "Mozambique", "Namibia", "Niger", "Nigeria", "Rwanda", "Sao Tome and Principe", "Senegal", "Seychelles", "Sierra Leone",
-"Somalia", "South Africa", "South Sudan", "Sudan", "Swaziland", "Tanzania", "Togo", "Tunisia", "Uganda", "Zambia", "Zimbabwe"]
 
 #url_dict = {"Confirmed":confirmed_url, "Deaths": deaths_url, "Recovered":recovered_url}
 #Function to collect cases
@@ -27,7 +24,7 @@ def collect_case(links):
     for key, url in links.items():
         cases = pd.read_csv(url).assign(source = key )
         global_case_list.append(cases)
-        
+
         list_cases = pd.concat(global_case_list, ignore_index=True)
     return list_cases
 
@@ -43,12 +40,12 @@ def africa_cases():
     global_cases = collect_case(url_dict)
     df = global_cases.copy()
     df.drop(select_columns,axis=1, inplace=True)
-   
+
     #transpose dataframe
     df_wide = df[df['Country/Region'].apply(lambda x: x in Africa)].melt(id_vars = ['Country/Region', 'source']).rename(columns = {"variable":"Date"})
     df_wide['Date'] = pd.to_datetime(df_wide['Date']).dt.strftime('%m-%d-%Y')
     africa_historic = df_wide.pivot_table(index = ['Country/Region', 'Date'], columns = 'source', values = 'value').reset_index().sort_values(['Date', 'Country/Region'], ascending = [False, True])
-    
+
     #extract most recent
     africa_today = africa_historic[africa_historic['Date'] == africa_historic.Date.max()].sort_values('Confirmed', ascending = False)
 
@@ -69,4 +66,3 @@ def download_daily_case():
 if __name__ == "__main__":
     url_dict = {"Confirmed":confirmed_url, "Deaths": deaths_url, "Recovered":recovered_url}
     download_daily_case()
-
