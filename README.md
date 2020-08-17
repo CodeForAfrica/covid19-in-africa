@@ -17,9 +17,7 @@ Full changelog: [`CHANGELOG.md`](CHANGELOG.md) - TODO
 
 **Commit Status**:
 
-> TODO
-
-<Add status bar >
+![CI download All African Cases](https://github.com/4bic/covid19-in-africa/workflows/CI%20download%20All%20African%20Cases/badge.svg)
 
 **Workflow status by countries**:
 
@@ -29,15 +27,20 @@ Full changelog: [`CHANGELOG.md`](CHANGELOG.md) - TODO
 > TODO
 
 
-## Dataset
-> TODO 
+## [Dataset](https://github.com/4bic/covid19-in-africa/tree/master/datasets)
 
 ### Tabular Data
 
-The **tabular data** files are located in `dataset` folder. The folder `dataset/daily` holds the daily updates in each country.
+The **tabular data** files are located in `dataset` folder (_sample head as of Jul-03_). The folder `dataset/daily` holds the daily updates in each country.
 
 <!-- > The metadata for the tabular data is found in `.dataherb/metadata.yml`. -->
-> TODO 
+| Country | 07-02-2020_confirmed | 07-02-2020_deaths | 07-02-2020_recovered
+| ------------- | ------------- | --- | ------------- |
+| Algeria | 14657 | 928 | 10342
+| Angola | 315 | 17 | 97
+| Benin	| 1199 | 21 | 333
+| Burkina Faso | 967 | 53 | 846
+| Cameroon | 12592 | 313 | 10100
 
 <!-- ### Other Data
 
@@ -45,19 +48,24 @@ Some of the countries publish more than simple tabular data. We cache the files 
 
 ### Scrapers
 
-The scripts that are being used to update the data are located in `scripts` folder. Most of the scripts require the `utils.py` module to run. Create a new environment and run `pip install -r requirements.txt` to install the requirements.
+The scripts that are being used to update the data are located in `scripts` folder. Create a new environment and run `pip install -r requirements.txt` to install the requirements.
 
 ### Workflows
 
->TODO
-<!-- The workflows that update the dataset are defined in `.github/workflows`. The python scripts are scheduled to run on GitHub Actions. -->
-
-## Notes
-
->TODO
+The workflows that update the dataset are defined in `.github/workflows`. The python scripts are scheduled to run on GitHub Actions.
 
 ## Community
 
->TODO
+[![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/CodeForAfrica/covid19-in-africa/issues)
 
 **Bugs and requests**: PRs are welcome.
+
+
+## License
+
+The source code is licensed under MIT license
+
+
+
+
+
