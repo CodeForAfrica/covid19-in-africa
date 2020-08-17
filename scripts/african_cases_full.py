@@ -59,10 +59,10 @@ def download_daily_case():
     """
 #     today's cases
 #    Add_filename
-    filename = str(africa_cases()[1].Date.max())+"africa_cases.csv"
+    filename = str(africa_cases()[1].Date.max())+"_c19_african_cases.csv"
     africa_cases()[0].to_csv('./datasets/daily/'+filename, index = False)
 #     historic cases
-    africa_cases()[1].to_csv('./datasets/africa_historic.csv', index = False)
+    africa_cases()[1].to_csv('./datasets/africa_historic_data.csv', index = False)
 
 
 if __name__ == "__main__":
