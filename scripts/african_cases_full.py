@@ -58,7 +58,9 @@ def download_daily_case():
       csv files in the datasets folder
     """
 #     today's cases
-    africa_cases()[0].to_csv('./datasets/africa_today.csv', index = False)
+#    Add_filename
+    filename = str(africa_cases()[1].Date.max())+"africa_cases.csv"
+    africa_cases()[0].to_csv('./datasets/daily/'+filename, index = False)
 #     historic cases
     africa_cases()[1].to_csv('./datasets/africa_historic.csv', index = False)
 
