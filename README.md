@@ -17,7 +17,7 @@ Full changelog: [`CHANGELOG.md`](CHANGELOG.md) - TODO
 
 **Commit Status**:
 
-![CI download All African Cases](https://github.com/4bic/covid19-in-africa/workflows/CI%20download%20All%20African%20Cases/badge.svg)
+![CI download historic Covid-19 Cases](https://github.com/CodeForAfrica/covid19-in-africa/workflows/CI%20download%20historic%20Covid-19%20Cases/badge.svg)
 
 **Workflow status by countries**:
 
