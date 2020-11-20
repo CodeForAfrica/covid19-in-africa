@@ -4,7 +4,7 @@ import os
 import re
 from lxml import etree, html
 
-from utils import Africa
+from utils import Africa, plot_africa_totals
 
 
 confirmed_url = "https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_confirmed_global.csv"
@@ -45,7 +45,7 @@ def africa_cases():
     df_wide = df[df['Country/Region'].apply(lambda x: x in Africa)].melt(id_vars = ['Country/Region', 'source']).rename(columns = {"variable":"Date"})
     df_wide['Date'] = pd.to_datetime(df_wide['Date']).dt.strftime('%m-%d-%Y')
     africa_historic = df_wide.pivot_table(index = ['Country/Region', 'Date'], columns = 'source', values = 'value').reset_index().sort_values(['Date', 'Country/Region'], ascending = [False, True])
-
+    plot_africa_totals(africa_historic)
     #extract most recent
     africa_today = africa_historic[africa_historic['Date'] == africa_historic.Date.max()].sort_values('Confirmed', ascending = False)
 
@@ -63,6 +63,7 @@ def download_daily_case():
     africa_cases()[0].to_csv('./datasets/daily/'+filename, index = False)
 #     historic cases
     africa_cases()[1].to_csv('./datasets/africa_historic_data.csv', index = False)
+
 
 
 if __name__ == "__main__":

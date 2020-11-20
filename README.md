@@ -2,7 +2,7 @@
 
 `covid19-in-africa` is a dataset repository for COVID-19 cases in Africa. We Load data from Johns Hopkins University Center for Systems Science and Engineering [(JHU CSSE) GitHub](https://github.com/CSSEGISandData/COVID-19/tree/master/csse_covid_19_data).
 
-
+![africa totals](datasets/africa_totals.png)
 
 [![If you would like to help or track the progress of this project](https://img.shields.io/badge/Roadmap-data--pipeline-informational)](https://github.com/4bic/covid19-in-africa/projects/1)
 
