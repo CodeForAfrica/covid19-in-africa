@@ -26,7 +26,6 @@ Full changelog: [`CHANGELOG.md`](CHANGELOG.md) - TODO
 
 > TODO
 
-
 ## [Dataset](https://github.com/4bic/covid19-in-africa/tree/master/datasets)
 
 ### Tabular Data
@@ -38,7 +37,7 @@ The **tabular data** files are located in `dataset` folder (_sample head as of J
 | ------------- | ------------- | --- | ------------- |
 | Algeria | 14657 | 928 | 10342
 | Angola | 315 | 17 | 97
-| Benin	| 1199 | 21 | 333
+| Benin | 1199 | 21 | 333
 | Burkina Faso | 967 | 53 | 846
 | Cameroon | 12592 | 313 | 10100
 
@@ -60,12 +59,6 @@ The workflows that update the dataset are defined in `.github/workflows`. The py
 
 **Bugs and requests**: PRs are welcome.
 
-
 ## License
 
 The source code is licensed under MIT license
-
-
-
-
-

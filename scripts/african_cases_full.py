@@ -1,71 +1,62 @@
-import requests
 import pandas as pd
-import os
-import re
-from lxml import etree, html
-
 from utils import Africa, plot_africa_totals
 
+base_url = """https://raw.githubusercontent.com/CSSEGISandData/COVID-19/\
+master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_"""
+url_dict = {
+    "Confirmed": f"{base_url}confirmed_global.csv",
+    "Deaths": f"{base_url}deaths_global.csv",
+    "Recovered": f"{base_url}recovered_global.csv"
+}
 
-confirmed_url = "https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_confirmed_global.csv"
-deaths_url = "https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_deaths_global.csv"
-recovered_url = "https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_recovered_global.csv"
 
-#url_dict = {"Confirmed":confirmed_url, "Deaths": deaths_url, "Recovered":recovered_url}
-#Function to collect cases
-def collect_case(links):
-    """Load csv
-    Arg:
-    url : link to file
+def fetch_data(name, url):
+    """Fetch data from the John Hopkins API
+
+    Parameters:
+    name: str
+        A label, one of 'Confirmed', 'Recovered' or 'Deaths' as per url
+    url : str
+        A link to a data set
+
     Returns:
-    list_cases : Dataframe with global cases.
+    A DataFrame of the data in the supplied url
     """
-    global_case_list = []
-    for key, url in links.items():
-        cases = pd.read_csv(url).assign(source = key )
-        global_case_list.append(cases)
+    unwanted_cols = ['Province/State', 'Lat', 'Long']
+    df = pd.read_csv(url).drop(unwanted_cols, axis=1)
+    africa_df = df[df['Country/Region'].isin(Africa)]
+    africa_df = africa_df.set_index('Country/Region').unstack()
+    return africa_df.rename(name)
 
-        list_cases = pd.concat(global_case_list, ignore_index=True)
-    return list_cases
 
-#Function to return Africa's most recent cases
-def africa_cases():
-    """Return the most recent cases for African countries
-    Arg:
-    global_cases : Dataframe with all global / international cases
-    Return:
-    africa_cases : transformed dataset with today's African cases
+def compile_africa_data(url_dict):
+    """Get and save the combined historic and daily Africa data
+
+    Parameters:
+    ----------
+    url_dict: dict
+        A dictionary of 'name': 'url' pairs
     """
-    select_columns = ['Province/State','Lat','Long']
-    global_cases = collect_case(url_dict)
-    df = global_cases.copy()
-    df.drop(select_columns,axis=1, inplace=True)
+    data_list = [fetch_data(name, url) for name, url in url_dict.items()]
 
-    #transpose dataframe
-    df_wide = df[df['Country/Region'].apply(lambda x: x in Africa)].melt(id_vars = ['Country/Region', 'source']).rename(columns = {"variable":"Date"})
-    df_wide['Date'] = pd.to_datetime(df_wide['Date']).dt.strftime('%m-%d-%Y')
-    africa_historic = df_wide.pivot_table(index = ['Country/Region', 'Date'], columns = 'source', values = 'value').reset_index().sort_values(['Date', 'Country/Region'], ascending = [False, True])
+    combined = pd.concat(data_list, axis=1).reset_index()
+
+    africa_historic = pd.DataFrame({
+        'Country/Region': combined['Country/Region'],
+        'Date': pd.to_datetime(combined['level_0']).dt.strftime('%m-%d-%Y'),
+        'Confirmed': combined['Confirmed'],
+        'Deaths': combined['Deaths'],
+        'Recovered': combined['Recovered']
+    })
+    africa_historic.to_csv('./datasets/africa_historic_data.csv', index=False)
+
+    dates = africa_historic['Date']
+    africa_daily = africa_historic[dates == dates.max()]
+    filename = f'./datasets/daily/{dates.max()}_c19_african_cases.csv'
+    africa_daily.to_csv(filename, index=False)
+
     plot_africa_totals(africa_historic)
-    #extract most recent
-    africa_today = africa_historic[africa_historic['Date'] == africa_historic.Date.max()].sort_values('Confirmed', ascending = False)
-
-    return africa_today, africa_historic
-
-#export
-def download_daily_case():
-    """Exports files to the datasets folder
-    Returns:
-      csv files in the datasets folder
-    """
-#     today's cases
-#    Add_filename
-    filename = str(africa_cases()[1].Date.max())+"_c19_african_cases.csv"
-    africa_cases()[0].to_csv('./datasets/daily/'+filename, index = False)
-#     historic cases
-    africa_cases()[1].to_csv('./datasets/africa_historic_data.csv', index = False)
-
 
 
 if __name__ == "__main__":
-    url_dict = {"Confirmed":confirmed_url, "Deaths": deaths_url, "Recovered":recovered_url}
-    download_daily_case()
+    compile_africa_data(url_dict)
