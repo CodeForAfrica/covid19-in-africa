@@ -40,10 +40,16 @@ def plot_africa_totals(data, colors=['blue', 'orangered', 'lawngreen']):
     fig = Figure(figsize=(10, 5), dpi=200)
     fig.suptitle(f'Total Coronavirus Cases in Africa as at {latest}', size=18)
     ax = fig.subplots()
-
+    # plot lines
     for idx, col in enumerate(data.columns):
         column = data[col]
         ax.plot(column.index, column, lw=2, color=colors[idx], label=col)
+
+    # annotate line plots
+    for ln in ax.lines:
+        x_coord, y_coord = ln.get_xydata()[-1]
+        ax.annotate(f'{ln.get_ydata().max():,}',
+                    xy=(x_coord+4, y_coord), style='oblique')
 
     ax.tick_params(axis='x', rotation=60)
     ax.yaxis.grid()  # horizontal gridlines
@@ -73,12 +79,13 @@ def plot_daily_confirmed(daily_data):
     ax = fig.subplots()
 
     data.plot.barh(x='Country/Region', ax=ax, width=0.9, color='teal')
-    ax.tick_params(size=15)
-
+    # annotate bars
     for p in ax.patches:
-        ax.annotate(f'{p.get_width():,}',
+        ax.annotate(f'{p.get_width():,}', style='oblique',
                     xy=(p.get_x()+p.get_width(), p.get_y()+.2))
     despine(ax)
+    ax.tick_params(size=15)
+    ax.get_xaxis().set_visible(False)  # hide x-axis
     ax.set_title(f'Confirmed Coronavirus Cases by Country as at {date}',
                  size=18)
     fig.savefig('datasets/africa_daily.png', transparent=True,
