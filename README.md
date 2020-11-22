@@ -4,6 +4,8 @@
 
 ![africa totals](datasets/africa_totals.png)
 
+![africa totals](datasets/africa_daily.png)
+
 [![If you would like to help or track the progress of this project](https://img.shields.io/badge/Roadmap-data--pipeline-informational)](https://github.com/4bic/covid19-in-africa/projects/1)
 
 ## Changelog

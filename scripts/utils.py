@@ -16,13 +16,29 @@ Africa = [
     "Zambia", "Zimbabwe"]
 
 
+def despine(ax, sides=['left', 'right', 'top', 'bottom']):
+    """Removes the bordering box (spines) from Matplotlib axes."""
+
+    [ax.spines[side].set_visible(False) for side in sides]
+
+
 def plot_africa_totals(data, colors=['blue', 'orangered', 'lawngreen']):
+    """Create a line plot of historical coronavirus case totals.
+
+    Parameters:
+    ----------
+    data: pd.DateFrame
+        A dataframe of historic coronavirus cases in Africa.
+    colors: str, valid marplotlib color input
+        Colors to apply to the 'confirmed', 'deaths', and 'recovered' lines
+        respectively'."""
+
     data['Date'] = data['Date'].astype('datetime64')
     data = data.groupby('Date').sum()
     latest = data.index.max().strftime('%d %h, %Y')
 
     fig = Figure(figsize=(10, 5), dpi=200)
-    fig.suptitle(f'Total Coronavirus Cases in Africa as at {latest}', size=17)
+    fig.suptitle(f'Total Coronavirus Cases in Africa as at {latest}', size=18)
     ax = fig.subplots()
 
     for idx, col in enumerate(data.columns):
@@ -35,12 +51,35 @@ def plot_africa_totals(data, colors=['blue', 'orangered', 'lawngreen']):
     ax.set_ylabel('Total Cases')
     ax.xaxis.set_major_locator(mdates.WeekdayLocator(interval=2))
     ax.xaxis.set_major_formatter(mdates.DateFormatter('%h %d'))
-
-    # remove bordering box
-    ax.spines['left'].set_visible(False)
-    ax.spines['right'].set_visible(False)
-    ax.spines['top'].set_visible(False)
-    ax.spines['bottom'].set_visible(False)
-
+    despine(ax)
     fig.legend(loc='right')
-    fig.savefig('datasets/africa_totals.png')
+    fig.savefig('datasets/africa_totals.png', bbox_inches='tight',
+                transparent=True)
+
+
+def plot_daily_confirmed(daily_data):
+    """Create a bar plot of a day's confirmed cases.
+
+    Parameters:
+    ----------
+    daily_data: pd.DataFrame
+        A dataframe of daily coronavirus cases, with confirmed cases in
+        descending order.
+    """
+    data = daily_data.set_index('Country/Region')['Confirmed'].sort_values()
+    date = daily_data['Date'].astype('datetime64').max().strftime('%h %d, %Y')
+
+    fig = Figure(figsize=(6, 12))
+    ax = fig.subplots()
+
+    data.plot.barh(x='Country/Region', ax=ax, width=0.9, color='teal')
+    ax.tick_params(size=15)
+
+    for p in ax.patches:
+        ax.annotate(f'{p.get_width():,}',
+                    xy=(p.get_x()+p.get_width(), p.get_y()+.2))
+    despine(ax)
+    ax.set_title(f'Confirmed Coronavirus Cases by Country as at {date}',
+                 size=18)
+    fig.savefig('datasets/africa_daily.png', transparent=True,
+                bbox_inches='tight')
