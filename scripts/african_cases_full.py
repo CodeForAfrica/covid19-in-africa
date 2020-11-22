@@ -1,5 +1,5 @@
 import pandas as pd
-from utils import Africa, plot_africa_totals, plot_daily_confirmed
+import utils
 
 base_url = """https://raw.githubusercontent.com/CSSEGISandData/COVID-19/\
 master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_"""
@@ -26,7 +26,7 @@ def fetch_data(name, url):
     A DataFrame of the data in the supplied url.
     """
     global_cases = pd.read_csv(url).drop(unwanted_cols, axis=1)
-    africa_df = global_cases[global_cases['Country/Region'].isin(Africa)]
+    africa_df = global_cases[global_cases['Country/Region'].isin(utils.Africa)]
     africa_df = africa_df.set_index('Country/Region').unstack()
     return africa_df.rename(name)
 
@@ -59,8 +59,13 @@ def compile_africa_data(url_dict):
     filename = f'./datasets/daily/{dates.max()}_c19_african_cases.csv'
     africa_daily.to_csv(filename, index=False)
 
-    plot_africa_totals(africa_historic)
-    plot_daily_confirmed(africa_daily)
+    coordinates = pd.read_csv(url_dict['Confirmed'],
+                              usecols=['Country/Region', 'Lat', 'Long'])
+    geo_data = africa_daily.merge(coordinates, on='Country/Region')
+
+    utils.plot_africa_totals(africa_historic)
+    utils.plot_daily_confirmed(africa_daily)
+    utils.plot_geoscatter(geo_data)
 
 
 if __name__ == "__main__":

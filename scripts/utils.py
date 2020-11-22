@@ -1,5 +1,6 @@
 from matplotlib.figure import Figure
 import matplotlib.dates as mdates
+import plotly.express as px
 
 Africa = [
     "Algeria", "Angola", "Benin", "Botswana", "Burkina Faso", "Burundi",
@@ -90,3 +91,15 @@ def plot_daily_confirmed(daily_data):
                  size=18)
     fig.savefig('datasets/africa_daily.png', transparent=True,
                 bbox_inches='tight')
+
+
+def plot_geoscatter(geo_data):
+    fig = px.scatter_geo(
+        geo_data, lat='Lat', lon='Long', scope='africa', size='Confirmed',
+        color='Confirmed', height=600, width=600,
+        color_continuous_scale=['cyan', 'yellow', 'orangered'],
+        title='Geographic Scatter-plot of Confirmed Cases'
+    )
+
+    with open('datasets/geo_scatter.png', 'wb') as pic:
+        pic.write(fig.to_image(format='png', scale=2))
