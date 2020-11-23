@@ -60,7 +60,7 @@ def plot_africa_totals(data, colors=['blue', 'orangered', 'lawngreen']):
     ax.xaxis.set_major_formatter(mdates.DateFormatter('%h %d'))
     despine(ax)
     fig.legend(loc='right')
-    fig.savefig('datasets/africa_totals.png', bbox_inches='tight',
+    fig.savefig('images/africa_totals.png', bbox_inches='tight',
                 transparent=True)
 
 
@@ -89,7 +89,7 @@ def plot_daily_confirmed(daily_data):
     ax.get_xaxis().set_visible(False)  # hide x-axis
     ax.set_title(f'Confirmed Coronavirus Cases by Country as at {date}',
                  size=18)
-    fig.savefig('datasets/africa_daily.png', transparent=True,
+    fig.savefig('images/africa_daily.png', transparent=True,
                 bbox_inches='tight')
 
 
@@ -101,5 +101,5 @@ def plot_geoscatter(geo_data):
         title='Geographic Scatter-plot of Confirmed Cases'
     )
 
-    with open('datasets/geo_scatter.png', 'wb') as pic:
+    with open('images/geo_scatter.png', 'wb') as pic:
         pic.write(fig.to_image(format='png', scale=2))
