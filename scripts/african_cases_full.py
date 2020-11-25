@@ -55,7 +55,7 @@ def compile_africa_data(url_dict):
     # date are restored as columns.
     combined = pd.concat(cases_list, axis=1).reset_index()
 
-    # Package the data as per the format in the archives, and save it.
+    # Package the data as per the format in the archives
     africa_historic = pd.DataFrame({
         'Country/Region': combined['Country/Region'],
         'Date': pd.to_datetime(combined['level_0']).dt.strftime('%m-%d-%Y'),
@@ -63,6 +63,10 @@ def compile_africa_data(url_dict):
         'Deaths': combined['Deaths'],
         'Recovered': combined['Recovered']
     })
+
+    # Sort by Date (descending) and Country (ascending), and save
+    africa_historic = africa_historic.sort_values(
+        by=['Date', 'Country/Region'], ascending=[False, True])
     africa_historic.to_csv('./datasets/africa_historic_data.csv', index=False)
 
     # Extract data for the latest date.
