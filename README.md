@@ -1,6 +1,6 @@
 # covid19-in-africa
 
-`covid19-in-africa` is a dataset repository for COVID-19 cases in Africa. We Load data from Johns Hopkins University Center for Systems Science and Engineering [(JHU CSSE) GitHub](https://github.com/CSSEGISandData/COVID-19/tree/master/csse_covid_19_data).
+`covid19-in-africa` is a dataset repository for COVID-19 cases in Africa. We Load data the from _Johns Hopkins University Center for Systems Science and Engineering_ [(JHU CSSE) GitHub](https://github.com/CSSEGISandData/COVID-19/tree/master/csse_covid_19_data).
 
 ![africa totals](images/africa_totals.png)
 
@@ -12,9 +12,8 @@
 ## Changelog
 
 **Changes**:
-> TODO
 
-Full changelog: [`CHANGELOG.md`](CHANGELOG.md) - TODO
+Full changelog: [`CHANGELOG.md`](CHANGELOG.md)
 
 ## Update Status
 
@@ -33,28 +32,33 @@ Full changelog: [`CHANGELOG.md`](CHANGELOG.md) - TODO
 
 ### Tabular Data
 
-The **tabular data** files are located in `dataset` folder (_sample head as of Jul-03_). The folder `dataset/daily` holds the daily updates in each country.
+The **tabular data** files are located in the `datasets` folder (_sample head as of Nov 24, 2020_). The folder `dataset/daily` holds the daily updates for each country.
 
 <!-- > The metadata for the tabular data is found in `.dataherb/metadata.yml`. -->
-| Country | 07-02-2020_confirmed | 07-02-2020_deaths | 07-02-2020_recovered
-| ------------- | ------------- | --- | ------------- |
-| Algeria | 14657 | 928 | 10342
-| Angola | 315 | 17 | 97
-| Benin | 1199 | 21 | 333
-| Burkina Faso | 967 | 53 | 846
-| Cameroon | 12592 | 313 | 10100
+Country/Region | Date       | Confirmed | Deaths | Recovered
+-------------- | ---------- | --------- | ------ | ---------
+Algeria        | 11-24-2020 | 77000     | 2309   | 50070
+Angola         | 11-24-2020 | 14742     | 338    | 7444
+Benin          | 11-24-2020 | 2916      | 43     | 2579
+Botswana       | 11-24-2020 | 9992      | 31     | 7692
+Burkina Faso   | 11-24-2020 | 2757      | 68     | 2557
 
 <!-- ### Other Data
 
 Some of the countries publish more than simple tabular data. We cache the files in `documents` folder. -->
 
-### Scrapers
+## Scrapers
 
-The scripts that are being used to update the data are located in `scripts` folder. Create a new environment and run `pip install -r requirements.txt` to install the requirements.
+The scripts that are used to update the data are located in the `scripts` folder. Create a new environment and run:
 
-### Workflows
+    pip install -r scripts/requirements.txt
+    python scripts/african_cases_full.py
 
-The workflows that update the dataset are defined in `.github/workflows`. The python scripts are scheduled to run on GitHub Actions.
+to install the requirements, and save the latest available data.
+
+## Workflows
+
+The workflows that update the datasets are defined in `.github/workflows`. The python scripts are scheduled to run on GitHub Actions.
 
 ## Community
 
@@ -64,4 +68,4 @@ The workflows that update the dataset are defined in `.github/workflows`. The py
 
 ## License
 
-The source code is licensed under MIT license
+The source code is licensed under the MIT license.
