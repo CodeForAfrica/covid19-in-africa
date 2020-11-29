@@ -39,6 +39,29 @@ def fetch_data(label, url):
     return data_series.rename(label)
 
 
+def fetch_daily_stats(date):
+    """Fetch incidence-rate and case-fatality-ratio data for Africa from
+    'csse_covid_19_daily_reports'.
+
+    Parameters:
+    ----------
+    date: str
+        Date in the form MM-DD-YYYY.
+
+    Returns:
+    -------
+    A DataFrame with incidence-rate & case-fatality-ratio, indexed by country.
+    """
+    # Modify base_url to fetch daily report data, which contains the derived
+    # statistics
+    daily_report_url = f'{base_url[:98]}daily_reports/{date}.csv'
+
+    daily_df = pd.read_csv(
+        daily_report_url, index_col='Country_Region',
+        usecols=['Country_Region', 'Incident_Rate', 'Case_Fatality_Ratio'])
+    return daily_df[daily_df.index.isin(utils.Africa)]
+
+
 def compile_africa_data(url_dict):
     """Get and save the historic and daily Africa coronavirus data, then plot
     basic visualisations.
@@ -70,12 +93,12 @@ def compile_africa_data(url_dict):
     africa_historic.to_csv('./datasets/africa_historic_data.csv', index=False)
 
     # Extract data for the latest date.
-    dates = africa_historic['Date']
-    africa_daily = africa_historic[dates == dates.max()]
+    latest_date = africa_historic['Date'].iloc[0]
+    africa_daily = africa_historic[africa_historic['Date'] == latest_date]
 
     # Sort in descending order of confirmed cases, and save.
     africa_daily = africa_daily.sort_values(by='Confirmed', ascending=False)
-    filename = f'./datasets/daily/{dates.max()}_c19_african_cases.csv'
+    filename = f'./datasets/daily/{latest_date}_c19_african_cases.csv'
     africa_daily.to_csv(filename, index=False)
 
     # Fetch location data for use in geographical plots
@@ -83,8 +106,12 @@ def compile_africa_data(url_dict):
                               usecols=['Country/Region', 'Lat', 'Long'])
     geo_data = africa_daily.merge(coordinates, on='Country/Region')
 
+    # Fetch incidence-rate & case-fatality-ratio data
+    daily_stats = fetch_daily_stats(latest_date)
+
     utils.plot_africa_totals(africa_historic)  # lineplots of total cases
     utils.plot_daily_confirmed(africa_daily)  # barplot of cases by country
+    utils.plot_daily_stats(daily_stats)  # barplots of derived statistics
     utils.plot_geoscatter(geo_data)  # bubble map of cases in Africa
 
 
