@@ -1,5 +1,9 @@
 # Changelog
 
+## 2020-11-29
+
+- Add a pair of barplots for incidence-rate and case-fatality-ratio.
+
 ## 2020-11-23
 
 - Set `python3.8` in the GitHub workflow. It is stable, and more current than `python3.7`.
