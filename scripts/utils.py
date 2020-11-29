@@ -41,11 +41,11 @@ def plot_africa_totals(data, colors=['blue', 'orangered', 'lawngreen']):
     # 'Deaths' and 'Recovered' remain, with 'Date' becoming the index.
     data = data.groupby('Date').sum()
 
-    latest_date = data.index.max().strftime('%h %d, %Y')  # used in title
+    latest_date = data.index.max().strftime('%b %d, %Y')  # used in title
 
     # Create a matplotlib Figure, with lineplots for 'confirmed', 'recovered',
     # and 'deaths'
-    fig = Figure(figsize=(10, 5), dpi=200)
+    fig = Figure(figsize=(10, 5), dpi=180)
     fig.suptitle(f'Total Coronavirus Cases in Africa as at {latest_date}',
                  size=18)
     ax = fig.subplots()
@@ -69,7 +69,7 @@ def plot_africa_totals(data, colors=['blue', 'orangered', 'lawngreen']):
 
     # Set the x-axis to show dates in 2-week intervals
     ax.xaxis.set_major_locator(mdates.WeekdayLocator(interval=2))
-    ax.xaxis.set_major_formatter(mdates.DateFormatter('%h %d'))  # e.g. Jan 20
+    ax.xaxis.set_major_formatter(mdates.DateFormatter('%b %d'))  # e.g. Jan 20
 
     fig.legend(loc='right')
     fig.savefig('images/africa_totals.png', bbox_inches='tight',
@@ -86,13 +86,13 @@ def plot_daily_confirmed(daily_data):
         'Country/Region', and 'Confirmed'.
     """
     latest_date = daily_data['Date'].astype('datetime64').max()\
-                                    .strftime('%h %d, %Y')
+                                    .strftime('%b %d, %Y')
 
     # Get and sort confirmed cases in ascending order
     data = daily_data.set_index('Country/Region')['Confirmed'].sort_values()
 
     # Create a horizontal barplot with country-confirmed-cases as bars
-    fig = Figure(figsize=(6, 12))
+    fig = Figure(figsize=(6, 12), dpi=150)
     ax = fig.subplots()
     ax.set_title(f'Confirmed Coronavirus Cases by Country as at {latest_date}',
                  size=18)
@@ -128,3 +128,44 @@ def plot_geoscatter(geo_data):
     # Save geographical scatter-plot as png image file
     with open('images/geo_scatter.png', 'wb') as pic:
         pic.write(fig.to_image(format='png', scale=2))
+
+
+def plot_daily_stats(daily_stats):
+    """Plot a pair of horizontal bar-plots for coronavirus incidence-rate &
+    case-fatality-ratio in Africa.
+
+    Parameters:
+    ----------
+    daily_stats: pd.DataFrame
+        A DataFrame with the incidence-rate and case-fatality-ratio info,
+        indexed by country.
+    """
+    fig = Figure(figsize=(12, 12), tight_layout=True)
+    ax1, ax2 = fig.subplots(nrows=1, ncols=2)
+
+    # Horizontal barplot of incidence rate
+    daily_stats['Incident_Rate'].sort_values()\
+                                .plot.barh(ax=ax1, color='darkviolet')
+    ax1.set_title('Incidence Rate (Cases Per 100,000 Persons)', size=16)
+    ax1.set_ylabel('Country/Region')
+    despine(ax1)  # remove bordering box
+    ax1.get_xaxis().set_visible(False)  # hide x-axis
+
+    # Horizontal barplot of case-fatality-ratio
+    daily_stats['Case_Fatality_Ratio'].sort_values()\
+                                      .plot.barh(ax=ax2, color='dimgray')
+    ax2.set_title(
+        'Case-Fatality Ratio \n(№ Recorded Deaths / № Cases * 100%)',
+        size=16)
+    ax2.set_ylabel('Country/Region')
+    despine(ax2)  # remove bordering box
+    ax2.get_xaxis().set_visible(False)  # hide x-axis
+
+    # Annotate the bars
+    for p in ax1.patches:
+        ax1.annotate(f'{p.get_width():,.2f}', (p.get_width(), p.get_y()))
+
+    for p in ax2.patches:
+        ax2.annotate(f'{p.get_width():.2f}%', (p.get_width(), p.get_y()))
+
+    fig.savefig('images/stats.png', transparent=True)
