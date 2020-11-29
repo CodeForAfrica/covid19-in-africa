@@ -35,17 +35,18 @@ Full changelog: [`CHANGELOG.md`](CHANGELOG.md)
 
 ### Tabular Data
 
-The **tabular data** files are located in the `datasets` folder (_sample head as of Nov 24, 2020_). The folder `dataset/daily` holds the daily updates for each country.
+The **tabular data** files are located in the `datasets` folder (_sample head as of Nov 28, 2020_). The folder `dataset/daily` holds the daily updates for each country.
 
 <!-- > The metadata for the tabular data is found in `.dataherb/metadata.yml`. -->
-Country/Region | Date       | Confirmed | Deaths | Recovered
--------------- | ---------- | --------- | ------ | ---------
-Algeria        | 11-24-2020 | 77000     | 2309   | 50070
-Angola         | 11-24-2020 | 14742     | 338    | 7444
-Benin          | 11-24-2020 | 2916      | 43     | 2579
-Botswana       | 11-24-2020 | 9992      | 31     | 7692
-Burkina Faso   | 11-24-2020 | 2757      | 68     | 2557
 
+Country/Region | Date       | Confirmed | Deaths | Recovered | Active | Incident_Rate | Case_Fatality_Ratio
+-------------- | ---------- | --------- | ------ | --------- | ------ | ------------- | -------------------
+South Africa   | 11-28-2020 | 785139    | 21439  | 723347    | 40353  | 1323.81780815 | 2.730599295156654
+Morocco        | 11-28-2020 | 349688    | 5739   | 298574    | 45375  | 947.392884172 | 1.6411772780307017
+Egypt          | 11-28-2020 | 115183    | 6621   | 102490    | 6072   | 112.555501008 | 5.748244098521483
+Ethiopia       | 11-28-2020 | 108930    | 1695   | 68250     | 38985  | 94.7517441241 | 1.5560451666207655
+Tunisia        | 11-28-2020 | 94980     | 3153   | 69226     | 22601  | 803.647262311 | 3.3196462413139614
+Kenya          | 11-28-2020 | 82605     | 1445   | 54399     | 26761  | 153.622843413 | 1.7492887839719145
 <!-- ### Other Data
 
 Some of the countries publish more than simple tabular data. We cache the files in `documents` folder. -->

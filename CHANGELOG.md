@@ -3,6 +3,7 @@
 ## 2020-11-29
 
 - Add a pair of barplots for incidence-rate and case-fatality-ratio.
+- Add active cases, incidence-rate and case-fatality-ratio to daily reports.
 
 ## 2020-11-23
 

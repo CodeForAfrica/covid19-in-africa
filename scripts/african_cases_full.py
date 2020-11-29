@@ -50,7 +50,8 @@ def fetch_daily_stats(date):
 
     Returns:
     -------
-    A DataFrame with incidence-rate & case-fatality-ratio, indexed by country.
+    A DataFrame with active cases, incidence-rate & case-fatality-ratio,
+    indexed by country.
     """
     # Modify base_url to fetch daily report data, which contains the derived
     # statistics
@@ -58,7 +59,9 @@ def fetch_daily_stats(date):
 
     daily_df = pd.read_csv(
         daily_report_url, index_col='Country_Region',
-        usecols=['Country_Region', 'Incident_Rate', 'Case_Fatality_Ratio'])
+        usecols=['Country_Region', 'Incident_Rate', 'Case_Fatality_Ratio',
+                 'Active']
+    )
     return daily_df[daily_df.index.isin(utils.Africa)]
 
 
@@ -96,6 +99,18 @@ def compile_africa_data(url_dict):
     latest_date = africa_historic['Date'].iloc[0]
     africa_daily = africa_historic[africa_historic['Date'] == latest_date]
 
+    # Fetch incidence-rate & case-fatality-ratio data, and merge it onto
+    # daily data.
+    daily_stats = fetch_daily_stats(latest_date)
+
+    # Active cases were cast as float upon download, but should be discrete.
+    # `errors='ignore'` returns the original values if conversion fails.
+    daily_stats['Active'] = daily_stats['Active'].astype('int32',
+                                                         errors='ignore')
+    africa_daily = africa_daily.merge(
+        daily_stats, how='left', left_on='Country/Region',
+        right_on='Country_Region')
+
     # Sort in descending order of confirmed cases, and save.
     africa_daily = africa_daily.sort_values(by='Confirmed', ascending=False)
     filename = f'./datasets/daily/{latest_date}_c19_african_cases.csv'
@@ -105,9 +120,6 @@ def compile_africa_data(url_dict):
     coordinates = pd.read_csv(url_dict['Confirmed'],
                               usecols=['Country/Region', 'Lat', 'Long'])
     geo_data = africa_daily.merge(coordinates, on='Country/Region')
-
-    # Fetch incidence-rate & case-fatality-ratio data
-    daily_stats = fetch_daily_stats(latest_date)
 
     utils.plot_africa_totals(africa_historic)  # lineplots of total cases
     utils.plot_daily_confirmed(africa_daily)  # barplot of cases by country
