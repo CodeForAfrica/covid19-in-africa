@@ -1,0 +1,86 @@
+body {
+    background-color: #444;
+    color: aliceblue;
+}
+
+h1 {
+    text-align: center;
+}
+
+.side-pane {
+    margin: 4%;
+}
+
+a {
+    color: turquoise;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+@media screen and (min-width:1024px) {
+    .content {
+        display: grid;
+        grid-template-columns: 2fr 5fr;
+        grid-template-rows: 1vh;
+    }
+}
+
+@media screen and (max-width:800px) {
+    h1 {
+        font-size: 2em;
+    }
+    .content {
+        margin: 5%;
+    }
+    #map {
+        overflow-x: auto;
+    }
+}
+
+#metric {
+    max-width: 400px;
+    margin: 2%;
+}
+
+.Select {
+    color: white;
+}
+
+.Select-control {
+    background-color: #444;
+    border-radius: 4px;
+    border: 1px solid orangered;
+}
+
+.is-open>.Select-control {
+    background: #444;
+    border-color: orangered;
+}
+
+.is-focused:not(.is-open)>.Select-control {
+    border-color: cyan;
+}
+
+.Select-menu-outer {
+    background-color: #444;
+    border: 1px solid orangered;
+}
+
+.total {
+    padding: 10px;
+    border: 2px solid orangered;
+    font-size: 2em;
+    margin: 2%;
+}
+
+.Select-value-label {
+    color: aliceblue !important;
+}
+
+#total-value {
+    font-size: 1.4em;
+    font-weight: 500;
+}

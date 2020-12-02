@@ -120,6 +120,7 @@ def compile_africa_data(url_dict):
     coordinates = pd.read_csv(url_dict['Confirmed'],
                               usecols=['Country/Region', 'Lat', 'Long'])
     geo_data = africa_daily.merge(coordinates, on='Country/Region')
+    geo_data.to_csv('./dashboard/data.csv')  # saved for use in the dashboard
 
     utils.plot_africa_totals(africa_historic)  # lineplots of total cases
     utils.plot_daily_confirmed(africa_daily)  # barplot of cases by country
