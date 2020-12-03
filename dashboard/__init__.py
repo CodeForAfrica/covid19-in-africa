@@ -11,6 +11,7 @@ latest_date = data['Date'].dt.strftime('%b %d, %Y')[0]
 
 # Initialize Dash app
 app = Dash(__name__,
+           title="Covid19 in Africa",
            meta_tags=[{'name': 'viewport',
                        'content': 'width=device-width, initial-scale=1.0'}])
 
@@ -23,7 +24,7 @@ app.layout = html.Div(className='content', children=[
         html.H1('COVID-19 IN AFRICA'),
         dcc.Markdown(f"""
         This simple dashboard tracks Coronavirus cases in Africa. It uses the
-        [JHU CSSE COVID-19 Data](https://github.com/CSSEGISandData/COVID-19.),
+        [JHU CSSE COVID-19 Data](https://github.com/CSSEGISandData/COVID-19),
         which is updated daily by 5:15 GMT.
 
         Resource Date: {latest_date}

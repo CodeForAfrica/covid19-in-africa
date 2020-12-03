@@ -10,6 +10,7 @@ COVID-19 GitHub repository](https://github.com/CSSEGISandData/COVID-19/tree/mast
 ![africa totals](images/stats.png)
 
 ![africa totals](images/geo_scatter.png)
+
 [![If you would like to help or track the progress of this project](https://img.shields.io/badge/Roadmap-data--pipeline-informational)](https://github.com/4bic/covid19-in-africa/projects/1)
 
 ## Changelog
