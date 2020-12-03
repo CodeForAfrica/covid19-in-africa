@@ -25,7 +25,7 @@ app.layout = html.Div(className='content', children=[
         dcc.Markdown(f"""
         This simple dashboard tracks Coronavirus cases in Africa. It uses the
         [JHU CSSE COVID-19 Data](https://github.com/CSSEGISandData/COVID-19),
-        which is updated daily by 5:15 GMT.
+        which is updated daily by 05:15 UTC with values for the past day.
 
         Resource Date: {latest_date}
         """),

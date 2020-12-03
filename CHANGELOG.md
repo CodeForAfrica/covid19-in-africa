@@ -1,5 +1,14 @@
 # Changelog
 
+## 2020-12-03
+
+- Move up daily the update schedule to 6:30 UTC.
+- Update dependencies for scripts.
+
+## 2020-12-02
+
+- Add a basic, web-based dashboard.
+
 ## 2020-11-29
 
 - Add a pair of barplots for incidence-rate and case-fatality-ratio.

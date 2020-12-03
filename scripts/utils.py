@@ -121,7 +121,7 @@ def plot_geoscatter(geo_data):
     """
     fig = px.scatter_geo(
         geo_data, lat='Lat', lon='Long', scope='africa', size='Confirmed',
-        color='Confirmed', height=600, width=600,
+        color='Confirmed', height=600, width=600, size_max=50,
         color_continuous_scale=['cyan', 'yellow', 'orangered'],
         title='Geographic Scatter-plot of Confirmed Cases'
     )
