@@ -1,8 +1,12 @@
 # Changelog
 
+## 2020-12-04
+
+- Add a table to the dashboard to display values by country.
+
 ## 2020-12-03
 
-- Move up daily the update schedule to 6:30 UTC.
+- Move up the daily update schedule to 6:30 UTC.
 - Update dependencies for scripts.
 
 ## 2020-12-02

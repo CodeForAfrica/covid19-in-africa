@@ -48,18 +48,20 @@ app.layout = html.Div(className='content', children=[
             ],
             style={'color': 'white'},
             value='Confirmed'
-        )]),
+        ),
+        html.Table(id='value-table', className='value-table'),
+    ]),
+
 
     # Geographical scatterplot (Bubble-map)
     html.Div([
         dcc.Graph(id='map', config={"scrollZoom": False})]),
 
-
 ])
 
 
 @app.callback(Output('map', 'figure'), [Input('metric', 'value')])
-def geo_scatter(metric):
+def draw_geo_scatter(metric):
     """Create a geo-scatterplot of Africa for the given metric.
 
     Parameters
@@ -119,6 +121,28 @@ def display_totals(metric):
 
     return [html.Span(headline), html.Br(),
             html.Span(value, id='total-value', style={'color': color})]
+
+
+@app.callback(Output('value-table', 'children'), [Input('metric', 'value')])
+def draw_table(metric):
+    """Create a table of the values of metric in each country.
+
+    Parameters
+    ----------
+    metric: str
+        One of 'Confirmed', 'Deaths', 'Recovered', 'Active', 'Incident_Rate',
+        or 'Case_Fatality_Ratio'.
+
+    Returns
+    -------
+    A HTML table.
+    """
+    X = data[['Country/Region', metric]].sort_values(by=metric,
+                                                     ascending=False)
+    color = 'cyan' if metric == 'Recovered' else 'orangered'
+    return [html.Tr([html.Td(country),
+                     html.Td(f'{round(value, 4):,}', style={'color': color})])
+            for country, value in X.values]
 
 
 if __name__ == '__main__':

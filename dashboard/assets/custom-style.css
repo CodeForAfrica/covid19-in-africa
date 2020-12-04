@@ -11,6 +11,23 @@ h1 {
     margin: 4%;
 }
 
+.value-table {
+    display: grid;
+    max-width: 400px;
+    height: 200px;
+    overflow-y: auto;
+    font-size: 1.5em;
+    margin: 2%;
+}
+
+table, td {
+    width: 100%;
+}
+
+td:nth-child(even) {
+    color: cyan;
+}
+
 a {
     color: turquoise;
     text-decoration: none;
