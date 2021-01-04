@@ -1,6 +1,7 @@
 import pandas as pd
 import utils
 
+
 base_url = """https://raw.githubusercontent.com/CSSEGISandData/COVID-19/\
 master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_"""
 
@@ -12,7 +13,8 @@ url_dict = {
 
 
 def fetch_data(label, url):
-    """Fetch data from the John Hopkins API.
+    """Fetch data from the Johns Hopkins University 'CSSEGISandData/COVID-19'
+    repository.
 
     Parameters:
     ----------
@@ -31,7 +33,7 @@ def fetch_data(label, url):
 
     # Select data for African countries
     africa_df = global_cases[global_cases['Country/Region'].isin(utils.Africa)]
-    africa_df = africa_df.set_index('Country/Region')
+    africa_df.set_index('Country/Region', inplace=True)
 
     # Create a pivot table with date & country as a MultiIndex, and the data
     # as a series.
@@ -58,24 +60,26 @@ def compile_africa_data(url_dict):
     # Package the data as per the format in the archives
     africa_historic = pd.DataFrame({
         'Country/Region': combined['Country/Region'],
-        'Date': pd.to_datetime(combined['level_0']).dt.strftime('%m-%d-%Y'),
+        'Date': pd.to_datetime(combined['level_0']),
         'Confirmed': combined['Confirmed'],
         'Deaths': combined['Deaths'],
         'Recovered': combined['Recovered']
     })
 
     # Sort by Date (descending) and Country (ascending), and save
-    africa_historic = africa_historic.sort_values(
-        by=['Date', 'Country/Region'], ascending=[False, True])
+    africa_historic.sort_values(by=['Date', 'Country/Region'],
+                                ascending=[False, True],
+                                inplace=True)
+    africa_historic['Date'] = africa_historic['Date'].dt.strftime('%m-%d-%Y')
     africa_historic.to_csv('./datasets/africa_historic_data.csv', index=False)
 
     # Extract data for the latest date.
-    dates = africa_historic['Date']
-    africa_daily = africa_historic[dates == dates.max()]
+    latest_date = africa_historic['Date'].iloc[0]
+    africa_daily = africa_historic[africa_historic['Date'] == latest_date]
 
     # Sort in descending order of confirmed cases, and save.
     africa_daily = africa_daily.sort_values(by='Confirmed', ascending=False)
-    filename = f'./datasets/daily/{dates.max()}_c19_african_cases.csv'
+    filename = f'./datasets/daily/{latest_date}_c19_african_cases.csv'
     africa_daily.to_csv(filename, index=False)
 
     # Fetch location data for use in geographical plots

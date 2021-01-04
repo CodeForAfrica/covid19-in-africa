@@ -66,6 +66,7 @@ def plot_africa_totals(data, colors=['blue', 'orangered', 'lawngreen']):
 
     # Show y-axis ticks as full plain text, instead of in scientific notation
     ax.ticklabel_format(axis='y', style='plain')
+    ax.yaxis.set_major_formatter(lambda x, p: f'{x:,.0f}')  # comma separation
 
     # Set the x-axis to show dates in 2-week intervals
     ax.xaxis.set_major_locator(mdates.WeekdayLocator(interval=2))
@@ -121,7 +122,7 @@ def plot_geoscatter(geo_data):
     """
     fig = px.scatter_geo(
         geo_data, lat='Lat', lon='Long', scope='africa', size='Confirmed',
-        color='Confirmed', height=600, width=600,
+        color='Confirmed', height=600, width=600, size_max=50,
         color_continuous_scale=['cyan', 'yellow', 'orangered'],
         title='Geographic Scatter-plot of Confirmed Cases'
     )
