@@ -1,5 +1,8 @@
 # covid19-in-africa
 
+![CI - Fetch latest data.](https://github.com/Tim-Abwao/covid19-in-africa/workflows/CI%20-%20Fetch%20latest%20data./badge.svg?branch=master)
+![CI - Apply changes made to priorly saved data.](https://github.com/Tim-Abwao/covid19-in-africa/workflows/CI%20-%20Apply%20changes%20made%20to%20priorly%20saved%20data./badge.svg)
+
 `covid19-in-africa` is a dataset repository for COVID-19 cases in Africa. We Load the data from the _Johns Hopkins University Center for Systems Science and Engineering_ (JHU CSSE) [CSSEGISandData /
 COVID-19 GitHub repository](https://github.com/CSSEGISandData/COVID-19/tree/master/csse_covid_19_data).
 
@@ -7,8 +10,9 @@ COVID-19 GitHub repository](https://github.com/CSSEGISandData/COVID-19/tree/mast
 
 ![africa totals](images/africa_daily.png)
 
+![africa totals](images/stats.png)
+
 ![africa totals](images/geo_scatter.png)
-[![If you would like to help or track the progress of this project](https://img.shields.io/badge/Roadmap-data--pipeline-informational)](https://github.com/4bic/covid19-in-africa/projects/1)
 
 ## Changelog
 
@@ -16,50 +20,29 @@ COVID-19 GitHub repository](https://github.com/CSSEGISandData/COVID-19/tree/mast
 
 Full changelog: [`CHANGELOG.md`](CHANGELOG.md)
 
-## Update Status
+The workflows that update the datasets are defined in `.github/workflows`. The python scripts are scheduled to run on GitHub Actions.
 
-**Commit Status**:
+## Datasets
 
-![CI download historic Covid-19 Cases](https://github.com/CodeForAfrica/covid19-in-africa/workflows/CI%20download%20historic%20Covid-19%20Cases/badge.svg)
+The **tabular data** files are located in the `datasets` folder (_sample head as of Nov 28, 2020_). The folder `dataset/daily` holds the daily updates for each country.
 
-**Workflow status by countries**:
-
-| Country | Status | Data Source |
-| ------------- | ------------- | --- |
-
-> TODO
-
-## [Dataset](https://github.com/4bic/covid19-in-africa/tree/master/datasets)
-
-### Tabular Data
-
-The **tabular data** files are located in the `datasets` folder (_sample head as of Nov 24, 2020_). The folder `dataset/daily` holds the daily updates for each country.
-
-<!-- > The metadata for the tabular data is found in `.dataherb/metadata.yml`. -->
-Country/Region | Date       | Confirmed | Deaths | Recovered
--------------- | ---------- | --------- | ------ | ---------
-Algeria        | 11-24-2020 | 77000     | 2309   | 50070
-Angola         | 11-24-2020 | 14742     | 338    | 7444
-Benin          | 11-24-2020 | 2916      | 43     | 2579
-Botswana       | 11-24-2020 | 9992      | 31     | 7692
-Burkina Faso   | 11-24-2020 | 2757      | 68     | 2557
-
-<!-- ### Other Data
-
-Some of the countries publish more than simple tabular data. We cache the files in `documents` folder. -->
+Country/Region | Date       | Confirmed | Deaths | Recovered | Active | Incidence Rate | Case - Fatality Ratio
+-------------- | ---------- | --------- | ------ | --------- | ------ | ------------- | -------------------
+South Africa   | 11-28-2020 | 785139    | 21439  | 723347    | 40353  | 1323.81780815 | 2.730599295156654
+Morocco        | 11-28-2020 | 349688    | 5739   | 298574    | 45375  | 947.392884172 | 1.6411772780307017
+Egypt          | 11-28-2020 | 115183    | 6621   | 102490    | 6072   | 112.555501008 | 5.748244098521483
+Ethiopia       | 11-28-2020 | 108930    | 1695   | 68250     | 38985  | 94.7517441241 | 1.5560451666207655
+Tunisia        | 11-28-2020 | 94980     | 3153   | 69226     | 22601  | 803.647262311 | 3.3196462413139614
+Kenya          | 11-28-2020 | 82605     | 1445   | 54399     | 26761  | 153.622843413 | 1.7492887839719145
 
 ## Scrapers
 
-The scripts that are used to update the data are located in the `scripts` folder. Create a new environment and run:
+The scripts that are used to update the data are located in the `scripts` folder. Create a virtual environment and run:
 
     pip install -r scripts/requirements.txt
-    python scripts/african_cases_full.py
+    python scripts/update_datasets.py
 
 to install the requirements, and save the latest available data.
-
-## Workflows
-
-The workflows that update the datasets are defined in `.github/workflows`. The python scripts are scheduled to run on GitHub Actions.
 
 ## Community
 
