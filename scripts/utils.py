@@ -52,7 +52,7 @@ def plot_africa_totals(data,
     # Annotate lineplots with current totals
     for line in ax.lines:
         x_coord, y_coord = line.get_xydata()[-1]  # position of latest totals
-        ax.annotate(f'{line.get_ydata().max():,}',  # latest total
+        ax.annotate(f'{line.get_ydata()[-1]:,}',  # latest total
                     xy=(x_coord+4, y_coord), style='oblique')
 
     ax.tick_params(axis='x', rotation=60)  # rotate x-axis ticks (dates) by 60°
